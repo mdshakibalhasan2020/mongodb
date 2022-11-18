@@ -15,7 +15,10 @@ MongoClient.connect(URL,function(error,MyMongoClient){
         //FindAllDataByProjection(MyMongoClient);
         //FindAllDataByQuery(MyMongoClient);
         //FindAllDataLimit(MyMongoClient);
-        FindAllDataSort(MyMongoClient);
+        //FindAllDataSort(MyMongoClient);
+       // updateMyData(MyMongoClient);
+      // CreateCollection(MyMongoClient);
+      DeleteCollection(MyMongoClient);
     }
 });
 function InsertData(MyMongoClient){
@@ -117,5 +120,27 @@ function FindAllDataSort(MyMongoClient){
     MyCollection.find().sort(SortPatern).toArray(function(error,result){
         console.log(result);
     });
+}
+function updateMyData(MyMongoClient){
+    var MyDatabase=MyMongoClient.db("school");
+    var MyCollection=MyDatabase.collection("student");
+    var MyQuery={Roll:"01"};
+    var NewValue={$set:{name:"Shakib A l Hasan",city:"kandi"}};
+
+    MyCollection.updateOne(MyQuery,NewValue,function(error,result){
+        console.log(result);
+    })
+}
+function CreateCollection(MyMongoClient){
+    var MyDatabase=MyMongoClient.db("school");
+    MyDatabase.createCollection("teacher",function(error,result){
+        console.log(result);
+    });
+}
+function DeleteCollection(MyMongoClient){
+    var MyDatabase=MyMongoClient.db("school");
+    MyDatabase.dropCollection("teacher",function(error,result){
+        console.log(result);
+    })
 }
 
